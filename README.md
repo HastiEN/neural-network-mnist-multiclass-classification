@@ -1,211 +1,163 @@
-# MNIST Classification Using a NumPy MLP
+# MNIST Multi-Class Classification Using a NumPy MLP
 
 **Course:** Computational Intelligence  
-**University:** Amirkabir University of Technology  
-**Faculty:** Biomedical Engineering  
 **Project Type:** Applied multi-class image classification  
-**Implementation:** Multi-Layer Perceptron from scratch using NumPy
+**Dataset:** MNIST handwritten digits  
+**Implementation:** Multi-Layer Perceptron implemented from scratch using NumPy
 
 ## Objective
 
-In this project, a Multi-Layer Perceptron (MLP) neural network was implemented from scratch to classify handwritten digits from the MNIST dataset.
+The goal of this project is to implement a neural network from scratch for classifying handwritten digit images from the MNIST dataset.
 
-All main steps, including data preprocessing, forward propagation, backpropagation, and weight updates, were implemented manually using NumPy. No ready-made deep learning framework such as TensorFlow or PyTorch was used. This makes the project useful for understanding the internal mechanics of neural networks.
+The model is a one-hidden-layer Multi-Layer Perceptron (MLP). All major neural-network components are implemented manually with NumPy, including forward propagation, backpropagation, loss calculation, and weight updates. No ready-made deep learning framework such as TensorFlow or PyTorch is used.
 
-## MNIST Dataset
+## Problem Type
 
-The MNIST dataset contains grayscale images of handwritten digits from 0 to 9. Each image has a size of 28 x 28 pixels.
+This project is a **multi-class classification** problem.
 
-Dataset specifications:
+The model receives an image of a handwritten digit and predicts one class from ten possible classes:
 
-- Number of training samples: 60,000
-- Number of test samples: 10,000
-- Image size: 28 x 28 pixels
-- Number of classes: 10
+```text
+0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+```
 
-Because there are ten possible output classes, this project is a **multi-class classification** problem.
+## Dataset
+
+The MNIST dataset contains grayscale images of handwritten digits.
+
+Main dataset information:
+
+| Item | Value |
+|---|---:|
+| Training samples | 60,000 |
+| Test samples | 10,000 |
+| Image size | 28 x 28 pixels |
+| Input features after flattening | 784 |
+| Number of classes | 10 |
 
 ## Data Preprocessing
 
-Before training the neural network, the data was prepared using the following steps:
+The following preprocessing steps are applied before training:
 
-- The 28 x 28 images were flattened into 784-dimensional vectors.
-- Pixel values were normalized to the range `[0, 1]` by dividing them by 255.
-- Labels were converted to one-hot encoded vectors so they matched the network output format.
+1. Each 28 x 28 image is flattened into a 784-dimensional vector.
+2. Pixel values are normalized from `[0, 255]` to `[0, 1]`.
+3. Integer labels are converted to one-hot encoded vectors.
 
-These preprocessing steps improve numerical stability and help the model converge faster during training.
+These steps make the data suitable for training a neural network and help improve numerical stability.
 
-## Neural Network Architecture
+## Model Architecture
 
-The implemented architecture is:
+The implemented neural network architecture is:
 
 ```text
 784 -> 128 -> 10
 ```
 
-The input layer receives 784 features, one for each pixel in the flattened image. The hidden layer contains 128 neurons, and the output layer contains 10 neurons, one for each digit class.
+This means:
 
-The network includes:
+- 784 input neurons for the flattened image pixels
+- 128 neurons in the hidden layer
+- 10 output neurons for the digit classes
 
-- A fully connected input-to-hidden linear layer
-- ReLU activation in the hidden layer
-- A fully connected hidden-to-output linear layer
-- Sigmoid activation in the output layer
-- Mean Squared Error (MSE) loss
-- Stochastic Gradient Descent (SGD) for weight updates
+Main model components:
 
-## Reason for Activation Function Choices
+| Component | Description |
+|---|---|
+| Input layer | Flattened 784-dimensional MNIST image |
+| Hidden layer | Fully connected layer with 128 neurons |
+| Hidden activation | ReLU |
+| Output layer | Fully connected layer with 10 neurons |
+| Output activation | Sigmoid |
+| Loss function | Mean Squared Error (MSE) |
+| Optimizer | Stochastic Gradient Descent (SGD) |
 
-ReLU was used in the hidden layer because it reduces saturation problems and helps gradients flow more effectively during training.
+## Training Process
 
-Sigmoid was used in the output layer to produce values in the range `[0, 1]`, making the output compatible with one-hot encoded labels.
+The model is trained using mini-batch gradient descent.
 
-For real-world multi-class classification, Softmax with cross-entropy is usually a more standard choice. However, the original assignment logic was preserved in this project.
+Training settings:
 
-## Training Settings
+| Parameter | Value |
+|---|---:|
+| Epochs | 10 |
+| Batch size | 128 |
+| Base hidden layer size | 128 |
+| Optimizer | SGD |
+| Loss | MSE |
 
-The training parameters were selected as follows:
+**Note:** The original notebook and report contain a small learning-rate inconsistency. The report mentions `lr = 0.1`, while the base model run in the notebook uses `lr = 0.5`. For final submission, the learning rate should be kept consistent between the code and the report.
 
-- Hidden layer size: 128 neurons
-- Batch size: 128
-- Number of epochs: 10
-- Optimizer: SGD
-- Loss function: MSE
+## Important Results
 
-**Important note:** The original report mentions `lr = 0.1`, while the base model run in the notebook uses `lr = 0.5`. The final submitted result should keep the learning rate consistent between the notebook and the report.
+### Base MLP Result
 
-## Question 1: Base Model Training
+The one-hidden-layer MLP successfully learns meaningful patterns from the MNIST dataset.
 
-The training results show the Mean Squared Error (MSE), training accuracy, and test accuracy over 10 epochs.
+Important observations:
 
-The loss decreases gradually during training, which indicates that backpropagation and the weight update process are working correctly. The faster decrease during the first epochs shows that the network quickly learns the main patterns in the data.
+- Training loss decreases over the epochs.
+- Training accuracy increases as learning continues.
+- Test accuracy also increases, showing that the model generalizes to unseen data.
+- The final test accuracy is reported at around **97%** for the base experiment.
+- The small difference between training and test accuracy suggests that the model does not show strong overfitting.
 
-The training loss curve shows a stable downward trend without strong oscillations. This suggests that the training process is numerically stable and that the selected learning rate is suitable for the experiment.
+### Hidden Neuron Sensitivity
 
-In the accuracy plot, both training and test accuracy improve as the number of epochs increases. The final test accuracy is reported at around 97%, showing that the model can generalize well to unseen MNIST samples. The small gap between training and test accuracy suggests that the model does not suffer from serious overfitting.
+The project also analyzes hidden-layer neuron sensitivity by reshaping selected first-layer weights into 28 x 28 images.
 
-Overall, the results show that a one-hidden-layer MLP can learn meaningful patterns from MNIST and perform well in handwritten digit classification.
+Main interpretation:
 
-## Question 2: Hidden Neuron Sensitivity Analysis
+- Some neurons become sensitive to vertical or diagonal stroke patterns.
+- Some neurons respond to curved structures.
+- These patterns are useful for recognizing handwritten digits.
+- The hidden layer acts like a feature extractor that detects low-level visual structures such as edges, lines, and curves.
 
-To analyze the sensitivity of hidden-layer neurons, the input weights of selected neurons from the first-layer weight matrix `W1` were extracted and reshaped into 28 x 28 images.
+### Hidden Layer Size Comparison
 
-These visualizations show which image regions and patterns each neuron is more sensitive to.
+The model is trained with different hidden-layer sizes: 64, 128, and 256 neurons.
 
-The results show that different neurons respond to different visual features. Some neurons highlight vertical or diagonal stroke-like patterns, which are common in digits such as 1 and 7. Other neurons respond more strongly to curved structures that appear in digits such as 2, 3, and 8.
+Reported comparison:
 
-Some neurons show mixed edge and light-dark region patterns, suggesting sensitivity to pen-stroke direction and local image structure. These observations indicate that the hidden layer extracts low-level features such as edges, lines, and curves, then transforms them into representations that are more useful for the output layer.
+| Hidden neurons | Best test accuracy | Mean epoch time |
+|---:|---:|---:|
+| 64 | 93.68% | 0.75 s |
+| 128 | 94.10% | 1.80 s |
+| 256 | 94.30% | 2.48 s |
 
-## Question 3: Effect of Hidden Layer Size
+Main conclusion from the comparison:
 
-In this section, the effect of changing the number of hidden-layer neurons was studied. The network was trained with three different hidden sizes:
+- Increasing the hidden-layer size improves test accuracy.
+- The improvement from 128 to 256 neurons is small.
+- Training time increases noticeably when the hidden layer becomes larger.
+- A hidden layer with **128 neurons** gives a good balance between accuracy and computational cost.
 
-- 64 neurons
-- 128 neurons
-- 256 neurons
+## Discussion
 
-The models were compared using test accuracy, convergence behavior, and training time.
+The results show that a simple MLP can classify MNIST digits with good performance, even without using deep learning frameworks.
 
-The results show that increasing the hidden-layer size improves test accuracy. For `H = 64`, the final test accuracy is about 93.68%. For `H = 128`, it increases to about 94.10%, and for `H = 256`, it reaches about 94.30%.
+The project is useful because it shows how the main parts of a neural network work internally:
 
-This means that increasing model capacity helps the network learn more complex patterns. However, the improvement becomes smaller as the hidden layer grows.
+- Linear layers
+- Activation functions
+- Loss calculation
+- Backpropagation
+- Gradient-based parameter updates
+- Accuracy evaluation
 
-The test accuracy comparison plot shows that all three models converge quickly during the first epochs. Larger hidden layers converge slightly better, but after about epoch 6, the improvement becomes small.
+Although the model performs well, it is still a simple educational implementation. For image classification tasks, convolutional neural networks usually perform better because they preserve spatial information in images.
 
-From a computational cost perspective, increasing the hidden-layer size increases training time. The average epoch time is about:
+## Limitations
 
-- `H = 64`: 0.75 seconds
-- `H = 128`: 1.80 seconds
-- `H = 256`: 2.48 seconds
+Main limitations of this project:
 
-Although `H = 256` gives the highest accuracy, the improvement over `H = 128` is limited compared with the additional training cost.
-
-In conclusion, choosing the hidden-layer size is important for balancing final accuracy and computational cost. In this experiment, 128 hidden neurons provide the best balance between accuracy, convergence speed, and training time.
-
-## Limitations and Notes
-
-This implementation is educational and intentionally uses only NumPy. It is useful for understanding the internal mechanics of neural networks, but it is not optimized like deep learning frameworks such as TensorFlow or PyTorch.
-
-Main limitations:
-
-- The model uses MSE with Sigmoid instead of Softmax with cross-entropy.
-- Training is slower than framework-based implementations.
-- The model is a simple MLP and does not use convolutional layers, which are usually better for image data.
-- The learning-rate value should be checked for consistency between the notebook and the final report.
+- The model uses an MLP instead of a CNN.
+- The image is flattened, so spatial structure is not directly preserved.
+- The implementation uses Sigmoid with MSE, while Softmax with cross-entropy is usually better for multi-class classification.
+- Training is slower than optimized deep learning frameworks.
+- The learning-rate value should be checked and made consistent before final submission.
 
 ## Conclusion
 
-This project demonstrates how a neural network can be implemented from scratch for multi-class handwritten digit classification. The MLP successfully learns patterns from MNIST images and achieves good classification performance.
+This project implements a multi-class MNIST digit classifier from scratch using NumPy. The model demonstrates the full training pipeline of a neural network, including preprocessing, forward propagation, backpropagation, and weight updates.
 
-The project also shows the effect of hidden-layer size on accuracy and training time. A hidden layer with 128 neurons provides a good balance between model performance and computational cost.
-
-## Report Figures
-
-The images are stored in the `figures/` folder next to this Markdown file. Keep `report.md` and the `figures/` folder together so the figures open correctly.
-
-### Figure 1
-
-![Figure 1: Training output and numerical results from the base MLP experiment.](figures/figure_01.png)
-
-*Training output and numerical results from the base MLP experiment.*
-
-### Figure 2
-
-![Figure 2: Training loss curve for the base model.](figures/figure_02.png)
-
-*Training loss curve for the base model.*
-
-### Figure 3
-
-![Figure 3: Training and test accuracy over epochs.](figures/figure_03.png)
-
-*Training and test accuracy over epochs.*
-
-### Figure 4
-
-![Figure 4: Example MNIST predictions from the trained model.](figures/figure_04.png)
-
-*Example MNIST predictions from the trained model.*
-
-### Figure 5
-
-![Figure 5: Parameter statistics or summary generated from the trained model.](figures/figure_05.png)
-
-*Parameter statistics or summary generated from the trained model.*
-
-### Figure 6
-
-![Figure 6: Hidden neuron sensitivity visualization.](figures/figure_06.png)
-
-*Hidden neuron sensitivity visualization.*
-
-### Figure 7
-
-![Figure 7: Additional hidden neuron sensitivity result.](figures/figure_07.png)
-
-*Additional hidden neuron sensitivity result.*
-
-### Figure 8
-
-![Figure 8: Training comparison for different hidden-layer sizes.](figures/figure_08.png)
-
-*Training comparison for different hidden-layer sizes.*
-
-### Figure 9
-
-![Figure 9: Test accuracy comparison for hidden-layer configurations.](figures/figure_09.png)
-
-*Test accuracy comparison for hidden-layer configurations.*
-
-### Figure 10
-
-![Figure 10: Training time and best accuracy comparison.](figures/figure_10.png)
-
-*Training time and best accuracy comparison.*
-
-### Figure 11
-
-![Figure 11: Final project result figure from the original report.](figures/figure_11.png)
-
-*Final project result figure from the original report.*
-
+The base model achieves strong performance, with final test accuracy reported around **97%**. The hidden-layer size experiment shows that increasing model capacity can improve accuracy, but also increases training time. Based on the reported results, **128 hidden neurons** provide the best practical balance between performance and computational cost.
