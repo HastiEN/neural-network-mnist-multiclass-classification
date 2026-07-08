@@ -141,69 +141,71 @@ The project also shows the effect of hidden-layer size on accuracy and training 
 
 ## Report Figures
 
+The images are stored in the `figures/` folder next to this Markdown file. Keep `report.md` and the `figures/` folder together so the figures open correctly.
+
 ### Figure 1
 
-![Figure 1: Training output and numerical results from the base MLP experiment.](report_figures/image1.png)
+![Figure 1: Training output and numerical results from the base MLP experiment.](figures/figure_01.png)
 
 *Training output and numerical results from the base MLP experiment.*
 
 ### Figure 2
 
-![Figure 2: Training loss curve for the base model.](report_figures/image2.png)
+![Figure 2: Training loss curve for the base model.](figures/figure_02.png)
 
 *Training loss curve for the base model.*
 
 ### Figure 3
 
-![Figure 3: Training and test accuracy over epochs.](report_figures/image3.png)
+![Figure 3: Training and test accuracy over epochs.](figures/figure_03.png)
 
 *Training and test accuracy over epochs.*
 
 ### Figure 4
 
-![Figure 4: Example MNIST predictions from the trained model.](report_figures/image4.png)
+![Figure 4: Example MNIST predictions from the trained model.](figures/figure_04.png)
 
 *Example MNIST predictions from the trained model.*
 
 ### Figure 5
 
-![Figure 5: Parameter statistics or summary generated from the trained model.](report_figures/image5.png)
+![Figure 5: Parameter statistics or summary generated from the trained model.](figures/figure_05.png)
 
 *Parameter statistics or summary generated from the trained model.*
 
 ### Figure 6
 
-![Figure 6: Hidden neuron sensitivity visualization.](report_figures/image6.png)
+![Figure 6: Hidden neuron sensitivity visualization.](figures/figure_06.png)
 
 *Hidden neuron sensitivity visualization.*
 
 ### Figure 7
 
-![Figure 7: Additional hidden neuron sensitivity result.](report_figures/image7.png)
+![Figure 7: Additional hidden neuron sensitivity result.](figures/figure_07.png)
 
 *Additional hidden neuron sensitivity result.*
 
 ### Figure 8
 
-![Figure 8: Training comparison for different hidden-layer sizes.](report_figures/image8.png)
+![Figure 8: Training comparison for different hidden-layer sizes.](figures/figure_08.png)
 
 *Training comparison for different hidden-layer sizes.*
 
 ### Figure 9
 
-![Figure 9: Test accuracy comparison for hidden-layer configurations.](report_figures/image9.png)
+![Figure 9: Test accuracy comparison for hidden-layer configurations.](figures/figure_09.png)
 
 *Test accuracy comparison for hidden-layer configurations.*
 
 ### Figure 10
 
-![Figure 10: Training time and best accuracy comparison.](report_figures/image10.png)
+![Figure 10: Training time and best accuracy comparison.](figures/figure_10.png)
 
 *Training time and best accuracy comparison.*
 
 ### Figure 11
 
-![Figure 11: Final project result figure from the original report.](report_figures/image11.png)
+![Figure 11: Final project result figure from the original report.](figures/figure_11.png)
 
 *Final project result figure from the original report.*
 
